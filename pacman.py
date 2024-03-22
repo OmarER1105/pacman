@@ -20,10 +20,10 @@ writer = Turtle(visible=False)
 aim = vector(5, 0)
 pacman = vector(-40, -80)
 ghosts = [
-    [vector(-180, 160), vector(10, 0)],
-    [vector(-180, -160), vector(0, 10)],
-    [vector(100, 160), vector(0, -10)],
-    [vector(100, -160), vector(-10, 0)],
+    [vector(-180, 160), vector(5, 0)],
+    [vector(-180, -160), vector(0, 5)],
+    [vector(100, 160), vector(0, -5)],
+    [vector(100, -160), vector(-5, 0)],
 ]
 # fmt: off
 tiles = [
@@ -131,14 +131,35 @@ def move():
     dot(20, 'yellow')
 
     for point, course in ghosts:
+
+        if pacman.x == point.x and (pacman.y - point.y)>0:
+            course.x = 0
+            course.y = 10
+            
+
+        elif pacman.x == point.x and (pacman.y - point.y)<0:
+            course.x = 0
+            course.y = -10
+            
+
+        elif pacman.y == point.y and (pacman.x - point.x)>0:
+            course.y = 0
+            course.x = 10
+            
+
+        elif pacman.y == point.y and (pacman.x - point.x)<0:
+            course.y = 0
+            course.x = -10
+            
+
         if valid(point + course):
             point.move(course)
         else:
             options = [
-                vector(10, 0),
-                vector(-10, 0),
-                vector(0, 10),
-                vector(0, -10),
+                vector(5, 0),
+                vector(-5, 0),
+                vector(0, 5),
+                vector(0, -5),
             ]
             plan = choice(options)
             course.x = plan.x
